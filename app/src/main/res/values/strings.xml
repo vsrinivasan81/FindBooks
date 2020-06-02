@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Find Books</string>
+    <string name="search_hint">Enter book or author name to search</string>
+    <string name="search_submit">Submit</string>
+    <string name="search_books_label">Search Books</string>
+    <string name="hello_world">Hello World</string>
 </resources>
