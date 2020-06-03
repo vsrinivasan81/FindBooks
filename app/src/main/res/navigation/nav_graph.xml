@@ -8,9 +8,22 @@
 
     <fragment
         android:id="@+id/bookSearch"
-        android:name="com.example.android.findbooks.activity.ui.BookSearch"
+        android:name="com.example.android.findbooks.ui.SearchBook"
         android:label="@string/search_books_label"
         tools:layout="@layout/fragment_book_search">
 
+        <action
+            android:id="@+id/action_bookSearch_to_searchResults"
+            app:destination="@id/searchResults"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+
+    <fragment
+        android:id="@+id/searchResults"
+        android:name="com.example.android.findbooks.ui.SearchResult"
+        android:label="@string/search_results_label"
+        tools:layout="@layout/fragment_search_results"/>
 </navigation>

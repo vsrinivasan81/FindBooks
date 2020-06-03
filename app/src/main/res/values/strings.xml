@@ -4,4 +4,6 @@
     <string name="search_submit">Submit</string>
     <string name="search_books_label">Search Books</string>
     <string name="hello_world">Hello World</string>
+    <string name="content_description">Test</string>
+    <string name="search_results_label">Search Results</string>
 </resources>
