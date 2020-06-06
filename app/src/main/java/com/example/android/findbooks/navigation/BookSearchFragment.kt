@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.android.findbooks.R
 import com.example.android.findbooks.databinding.FragmentBookSearchBinding
 import com.google.android.material.button.MaterialButton
+import timber.log.Timber
 
 class BookSearchFragment : Fragment() {
 
@@ -30,7 +30,10 @@ class BookSearchFragment : Fragment() {
     }
 
     private fun clickHandler(view:View) {
-        view.findNavController().navigate(R.id.action_bookSearch_to_searchResults)
+        val searchInput: String = binding.searchTextInput.text.toString()
+        Timber.i("Search Input : $searchInput")
+        view.findNavController().navigate(
+            BookSearchFragmentDirections.actionBookSearchToSearchResults(searchInput))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
