@@ -7,4 +7,13 @@
     <string name="search_results_label">Search Results</string>
     <string name="about_menu_option">About</string>
     <string name="about_info">About</string>
+    <string name="book_details_header">Book Details</string>
+    <string name="book_cover_image">Book Cover Image</string>
+    <string name="about_app">Sample Android app to demonstrate Kotlin language proficiency.
+        The app has been developed using Android Architecture Components such as Navigation and Lifecycle
+        extensions.Primary use of app is to search books over the internet using Google Books API.
+        Happy Searching!</string>
+    <string name="search_validation">Please enter search text</string>
+    <string name="about_kotlin_app">#30daysofKotlin</string>
+
 </resources>

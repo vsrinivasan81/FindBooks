@@ -1,14 +1,16 @@
 package com.example.android.findbooks.navigation
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.android.findbooks.R
 import com.example.android.findbooks.databinding.FragmentBookSearchBinding
 import com.google.android.material.button.MaterialButton
-import timber.log.Timber
 
 class BookSearchFragment : Fragment() {
 
@@ -31,9 +33,14 @@ class BookSearchFragment : Fragment() {
 
     private fun clickHandler(view:View) {
         val searchInput: String = binding.searchTextInput.text.toString()
-        Timber.i("Search Input : $searchInput")
-        view.findNavController().navigate(
-            BookSearchFragmentDirections.actionBookSearchToSearchResults(searchInput))
+        if (searchInput.isNotBlank()) {
+            hideKeyboardFrom(binding.root.context,binding.root)
+            view.findNavController().navigate(
+                BookSearchFragmentDirections.actionBookSearchToSearchResults(searchInput)
+            )
+        } else {
+            binding.searchTextInput.error = getString(R.string.search_validation)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -45,5 +52,12 @@ class BookSearchFragment : Fragment() {
         return NavigationUI.onNavDestinationSelected(
             item, requireView().findNavController())
                 || super.onOptionsItemSelected(item)
+    }
+
+    private fun hideKeyboardFrom(context: Context, view: View) {
+        val imm: InputMethodManager =
+            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+        view.clearFocus()
     }
 }

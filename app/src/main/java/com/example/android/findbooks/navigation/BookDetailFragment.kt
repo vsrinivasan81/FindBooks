@@ -1,33 +1,41 @@
 package com.example.android.findbooks.navigation
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.android.findbooks.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.android.findbooks.databinding.FragmentBookDetailBinding
+import com.example.android.findbooks.network.Book
 import com.example.android.findbooks.viewmodel.BookDetailViewModel
+import com.example.android.findbooks.viewmodel.BookDetailViewModelFactory
 
 class BookDetailFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = BookDetailFragment()
-    }
-
     private lateinit var viewModel: BookDetailViewModel
+    private lateinit var bookDetailBinding: FragmentBookDetailBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.book_detail_fragment, container, false)
+
+        bookDetailBinding = FragmentBookDetailBinding
+                                .inflate(inflater,container, false)
+
+        val bookItem:Book = BookDetailFragmentArgs
+                                .fromBundle(requireArguments()).selectedBook
+        val viewModelFactory = BookDetailViewModelFactory(bookItem)
+        viewModel = ViewModelProvider(this, viewModelFactory)
+            .get(BookDetailViewModel::class.java)
+
+        bookDetailBinding.viewModel = viewModel
+        bookDetailBinding.lifecycleOwner = viewLifecycleOwner
+
+        return bookDetailBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(BookDetailViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
+
 
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/bookSearch">
 
@@ -37,7 +37,7 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/searchResults"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
         <argument
             android:name="searchText"
             app:argType="string" />
@@ -46,8 +46,12 @@
     <fragment
         android:id="@+id/bookDetailFragment"
         android:name="com.example.android.findbooks.navigation.BookDetailFragment"
-        android:label="book_detail_fragment"
-        tools:layout="@layout/book_detail_fragment" />
+        android:label="@string/book_details_header"
+        tools:layout="@layout/fragment_book_detail">
+        <argument
+            android:name="selectedBook"
+            app:argType="com.example.android.findbooks.network.Book"/>
+    </fragment>
 
     <fragment
         android:id="@+id/aboutFragment"

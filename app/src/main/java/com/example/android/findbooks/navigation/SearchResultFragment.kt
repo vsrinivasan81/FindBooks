@@ -5,52 +5,46 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.android.findbooks.adapter.SearchResultAdapter
 import com.example.android.findbooks.databinding.FragmentSearchResultsBinding
-import com.example.android.findbooks.utils.Book
 import com.example.android.findbooks.viewmodel.SearchResultViewModel
-import timber.log.Timber
+import com.example.android.findbooks.viewmodel.SearchResultViewModelFactory
 
 class SearchResultFragment : Fragment() {
 
-    private var bookList : ArrayList<Book> = ArrayList()
     private lateinit var binding: FragmentSearchResultsBinding
-    private lateinit var gridLayoutManager: GridLayoutManager
-    private lateinit var searchResultAdapter: SearchResultAdapter
-    private lateinit var args: SearchResultFragmentArgs
-    private val viewModel:SearchResultViewModel by viewModels()
-
-    init {
-        bookList.add(Book("Harry", ""))
-        bookList.add(Book("Ron", ""))
-        bookList.add(Book("Hermoine", ""))
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentSearchResultsBinding.inflate(
             layoutInflater, container, false)
-        binding.viewModel = viewModel
 
-        args = SearchResultFragmentArgs.fromBundle(requireArguments())
-        val searchText:String = args.searchText
-        Timber.i("Search text : $searchText")
+        val args = SearchResultFragmentArgs.fromBundle(requireArguments())
+        val viewModelFactory = SearchResultViewModelFactory(args.searchText)
+        val searchResultViewModel = ViewModelProvider(this, viewModelFactory)
+            .get(SearchResultViewModel::class.java)
+
+        binding.viewModel = searchResultViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.resultsRecyclerview.adapter = SearchResultAdapter(SearchResultAdapter.OnClickListener {
+            searchResultViewModel.displayPropertyDetails(it)
+        })
+
+        searchResultViewModel.navigateToSelectedBook.observe(viewLifecycleOwner, Observer {
+            if ( null != it ) {
+                this.findNavController().navigate(SearchResultFragmentDirections.actionSearchResultsToBookDetailFragment(it))
+                searchResultViewModel.displayBookDetailsComplete()
+            }
+        })
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        gridLayoutManager = GridLayoutManager(view.context, 3)
-        searchResultAdapter = SearchResultAdapter(bookList)
-        binding.resultsRecyclerview.layoutManager = gridLayoutManager
-        binding.resultsRecyclerview.adapter = searchResultAdapter
-
     }
 }

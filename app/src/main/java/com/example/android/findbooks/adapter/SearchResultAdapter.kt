@@ -1,35 +1,56 @@
 package com.example.android.findbooks.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.findbooks.R
-import com.example.android.findbooks.utils.Book
-import com.google.android.material.textview.MaterialTextView
+import com.example.android.findbooks.databinding.GridItemViewBinding
+import com.example.android.findbooks.network.Book
 
-class SearchResultAdapter (private val resultsList : ArrayList<Book>) :
-    RecyclerView.Adapter<SearchResultAdapter.ResultsViewHolder>() {
+class SearchResultAdapter(private val onClickListener: OnClickListener) :
+    ListAdapter<Book, SearchResultAdapter.ResultsViewHolder>(BookDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultsViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.book_card_view, parent, false)
-
-        return ResultsViewHolder(view)
+        return ResultsViewHolder.from(parent)
     }
-
-    override fun getItemCount() = resultsList.size
 
     override fun onBindViewHolder(holder: ResultsViewHolder, position: Int) {
-        holder.textView.text = resultsList[position].title
-        holder.imageView.setImageResource(R.drawable.splash_logo)
+        val bookItem = getItem(position)
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(bookItem)
+        }
+        holder.bind(bookItem)
     }
 
-    class ResultsViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        var imageView: ImageView = itemView.findViewById(R.id.item_image)
-        var textView: MaterialTextView = itemView.findViewById(R.id.item_title)
+    class ResultsViewHolder private constructor
+        (private val binding: GridItemViewBinding):RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(bookItem: Book) {
+            binding.book = bookItem
+            binding.executePendingBindings()
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): ResultsViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = GridItemViewBinding.inflate(layoutInflater, parent, false)
+                return ResultsViewHolder(binding)
+            }
+        }
     }
 
+    class OnClickListener(val clickListener: (selectedBook:Book) -> Unit) {
+        fun onClick(selectedBook:Book) = clickListener(selectedBook)
+    }
+}
 
+class BookDiffCallBack: DiffUtil.ItemCallback<Book>() {
+    override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Book, newItem: Book): Boolean {
+        return oldItem == newItem
+    }
 }
