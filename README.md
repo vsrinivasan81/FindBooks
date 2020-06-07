@@ -1,6 +1,6 @@
 # Find Books - Android app developed using Kotlin https://kotlinlang.org
 
-The purpose of this project is to develop a sample Android app using Kotlin and Android architecture components for participation in the Google India #30daysofKotlin challenge held on May 2020.
+The purpose of this project is to develop a sample Android app using Kotlin and Android architecture components for participation in the Google India #30daysofKotlin challenge held during May 2020.
 
 <img src="https://user-images.githubusercontent.com/39544287/83970445-5ed8b080-a8f3-11ea-978f-5fb525d418eb.png" width="200" height="400"> <img src="https://user-images.githubusercontent.com/39544287/83970441-5da78380-a8f3-11ea-9095-c4eb762d14e8.png" width="200" height="400"> <img src="https://user-images.githubusercontent.com/39544287/83970438-5b452980-a8f3-11ea-982e-64d3e7ba317c.png" width="200" height="400"> <img src="https://user-images.githubusercontent.com/39544287/83970433-57190c00-a8f3-11ea-911f-c29bd3fba0be.png" width="200" height="400">
 
