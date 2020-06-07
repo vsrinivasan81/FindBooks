@@ -16,4 +16,8 @@
         <item name="fontFamily">@font/roboto</item>
     </style>
 
+    <style name="NavigationDrawerStyle">
+        <item name="android:textSize">32sp</item>
+    </style>
+
 </resources>
