@@ -7,8 +7,8 @@ The purpose of this project is to develop a sample Android app using Kotlin and 
 * Tech-stack
     * [Kotlin](https://kotlinlang.org/) + [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - perform background operation
     * [Retrofit](https://square.github.io/retrofit/) - networking
-    * [Glide] (https://github.com/bumptech/glide/) - Image loading and management
-    * [Moshi] (https://github.com/square/moshi) - Json Adapter for Kotlin
+    * [Glide](https://github.com/bumptech/glide/) - Image loading and management
+    * [Moshi](https://github.com/square/moshi) - Json Adapter for Kotlin
     * [Jetpack](https://developer.android.com/jetpack)
         * [Navigation](https://developer.android.com/topic/libraries/architecture/navigation/) - deal with whole in-app navigation
         * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - notify views about database change
